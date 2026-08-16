@@ -1,4 +1,4 @@
-## environment setup
+# environment setup
 Always install Django inside a virtual environment (.venv), never globally. Installing globally can break system tools and causes version conflicts between different projects. [1] 
 To address your concern: a .venv does not force you to work inside a subfolder. It is best practice to keep your environment folder separate from your actual source code.
 Here is the industry-standard workspace setup for a Django project.
@@ -48,3 +48,11 @@ I can provide specific configuration files for your setup.
 
 [1] [https://platzi.com](https://platzi.com/cursos/django/instalacion-de-entornos-virtuales-y-django-en-wind/)
 [2] [https://platzi.com](https://platzi.com/cursos/django/instalacion-de-entornos-virtuales-y-django-en-wind/)
+
+# Setup commands
+## Create new project
+django-admin startproject my_django_project src
+
+## Create new app
+python manage.py startapp <app_name>
+python manage.py startapp <app_name> src
