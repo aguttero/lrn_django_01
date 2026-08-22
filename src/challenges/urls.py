@@ -4,7 +4,8 @@ from . import views
 
 urlpatterns = [
     path("pol", views.index, name="index"),
-    path("january", views.january, name="january"),
-    path("<month>", views.monthly_challenge, name="monthly_challenge"),
+    path("healthy", views.healthy, name="healthy"),
+    path("<int:month>", views.monthly_challenge_by_number, name="monthly_challenge_number"),
+    path("<str:month>", views.monthly_challenge, name="monthly_challenge"),
 
 ]

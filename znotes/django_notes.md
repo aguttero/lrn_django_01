@@ -59,3 +59,6 @@ django-admin startproject my_django_project src
 ## Create new app
 cd src
 python manage.py startapp <app_name>
+
+# Run DEV Server
+python3 src/manage.py runserver
