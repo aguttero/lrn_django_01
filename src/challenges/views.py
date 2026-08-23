@@ -27,7 +27,8 @@ def healthy(request):
     return HttpResponse("<h1>Hello. This is the January Month page</h1>")
 
 
-## filter by int and redirect
+# filter by int and redirect
+# HARDCODED REDIRECT and REVERSE REDIRECT
 def monthly_challenge_by_number(request, month: int):
     months_list1 = list(monthly_content_dict.keys())
 
@@ -38,8 +39,18 @@ def monthly_challenge_by_number(request, month: int):
     if month > len(months_list1):
         raise Http404("ZAG 404: Index out of range")
 
+    # HARDCODED REDIRECT
+    # redirect_month = months_list1[month-1]
+    # return redirect("/challenges/"+redirect_month)
+
+    # REVERSE REDIRECT (NAME in urls.py name attribute)
     redirect_month = months_list1[month-1]
-    return redirect("/challenges/"+redirect_month)
+    # OLD WAY using reverse
+    # from django.ulrs import reverse
+    #redirect_path = reverse("month-challenge", args=[redirect_month])
+    return redirect ("month_challenge", redirect_month )
+
+
 
 def monthly_challenge(request, month: str):
     challenge_text = monthly_content_dict.get(month,None)
