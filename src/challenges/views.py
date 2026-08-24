@@ -57,14 +57,25 @@ def monthly_challenge_by_number(request, month: int):
     #redirect_path = reverse("month-challenge", args=[redirect_month])
     return redirect ("month_challenge", redirect_month )
 
-
-
+# V2 WITH RENDER
 def monthly_challenge(request, month: str):
     challenge_text = monthly_content_dict.get(month,None)
     print (f"challenge_text= {challenge_text}")
     if month == "badurl":
         raise Http404("sample 404 response")
     if challenge_text:
-        return HttpResponse(f"Challenge for {month}: {challenge_text}")
+        return render(request=request, template_name="challenges/challenge_item.html")
     else:
         raise Http404("ZAG 404: Month not found")
+
+
+# V1 without RENDER
+# def monthly_challenge(request, month: str):
+#     challenge_text = monthly_content_dict.get(month,None)
+#     print (f"challenge_text= {challenge_text}")
+#     if month == "badurl":
+#         raise Http404("sample 404 response")
+#     if challenge_text:
+#         return HttpResponse(f"Challenge for {month}: {challenge_text}")
+#     else:
+#         raise Http404("ZAG 404: Month not found")
