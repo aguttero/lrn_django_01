@@ -1,12 +1,18 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>LRN Django</title>
-    </head>
-    <body>
-        <h1>Template page</h1>
-        <h2>This is an h2 placeholder</h2>
-    </body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}{{ selected_month|capfirst }} Challenge{%endblock%}
+{% block content %}
+    <h1>
+        Challenge Item Template page <br />
+        Month: {{ selected_month|capfirst }}
+    </h1>
+    {% if challenge_item is not None %}
+    <h2>GOAL: {{ challenge_item|title }}</h2>
+    {% else %}
+    <h2>GOAL: There is no challenge for this month yet!</h2>
+    {% endif %}
+    <h2>This is an h2 placeholder</h2>
+    <h2>
+        django var value for challenge_item: {{ challenge_item|title }}
+    </h2>
+{%endblock%}

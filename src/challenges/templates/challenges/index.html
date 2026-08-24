@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{%comment%}
+    {% block title %}All Challenges {%endblock%}
+{%endcomment%}
+
+    {% block content %}
+        <header>
+            <h1> Challenge Item Index</h1>
+        </header>
+        <section>
+            {%comment "this is a note for the comment"%}
+                <p>Commented out text</p>
+            {%endcomment%}
+            <ul>
+                {% for month in month_list %}
+                    <li><a href="/challenges/{{ month }}">{{ month|capfirst }}</a></li>
+                    <li><a href="{% url 'month_str_path' month %}"> {{ month|capfirst }} </a></li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <h1>Template page</h1>
+        <h2>This is an h2 placeholder</h2>
+        <h2>django variable value for selected month: {{ selected_month|capfirst }} </h2>
+        <h2>django variable value for challenge_item: {{ challenge_item|title }} </h2>
+    {%endblock%}
