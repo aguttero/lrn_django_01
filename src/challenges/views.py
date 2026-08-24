@@ -19,12 +19,19 @@ monthly_content_dict = {
 
 
 # Create your views here.
-def index(request):
+def pol(request):
     return HttpResponse("<h1>Hello. This is POL</h1>")
 
 
 def healthy(request):
     return HttpResponse("<h1>Hello. This is the January Month page</h1>")
+
+
+def index(request):
+    response_text = b"Place holder for index"
+    list_items = []
+    months_list = list(monthly_content_dict.keys())
+    return HttpResponse(response_text)
 
 
 # filter by int and redirect
