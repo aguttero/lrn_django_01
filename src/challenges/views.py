@@ -23,10 +23,6 @@ def pol(request):
     return HttpResponse("<h1>Hello. This is POL</h1>")
 
 
-def healthy(request):
-    return HttpResponse("<h1>Hello. This is the January Month page</h1>")
-
-
 # WITH TEMPLATE RENDER
 def index(request):
     month_list = list(monthly_content_dict.keys())

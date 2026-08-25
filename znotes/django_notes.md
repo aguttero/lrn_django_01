@@ -66,3 +66,35 @@ python manage.py startapp <app_name>
 
 # Run DEV Server
 python3 src/manage.py runserver
+
+# Settings.py
+## add application name to 
+INSTALLED_APPS = [
+    'challenges', # name defined in challenges/apps.py...
+
+## add templates global path:
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            BASE_DIR / "templates"
+
+
+## add '/static/' global path
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+    ]
+
+
+
+# src/subapp/urls.py
+add app_name = "appname" to be able to reverse call the specific url path by path name
+add path to urlpatterns
+urlpatterns = [
+    path("", views.index, name="index"),
+    path("pol", views.pol, name="pol"),
+
+# views,py
+add route functions 
+def pol(request):
+    return HttpResponse("<h1>Hello. This is POL</h1>")
