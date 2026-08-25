@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+    {%comment%} This page only shows when settings.py DEBUG = False {%endcomment%}
+
+{% block page_title %}
+    404 global template
+{% endblock page_title %}
+
+{% block body_content %}
+    <h1>Somethong went wrong - Page not found!</h1>
+    <h2>This is the 404 Global Template</h2>
+    <p>Sorry we could not find a matchting page! </p>
+{% endblock body_content %}

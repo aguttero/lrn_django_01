@@ -5,6 +5,7 @@
 {%endcomment%}
 
     {% block content %}
+        {% include "challenges/includes/header.html" %}
         <header>
             <h1> Challenge Item Index</h1>
         </header>
@@ -15,7 +16,7 @@
             <ul>
                 {% for month in month_list %}
                     <li><a href="/challenges/{{ month }}">{{ month|capfirst }}</a></li>
-                    <li><a href="{% url 'month_str_path' month %}"> {{ month|capfirst }} </a></li>
+                    <li><a href="{% url 'challenges:month_str_path' month %}"> {{ month|capfirst }} </a></li>
                 {% endfor %}
             </ul>
         </section>

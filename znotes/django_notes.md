@@ -1,5 +1,9 @@
 # V 6.1 Documentation
 https://docs.djangoproject.com/en/6.1/
+https://docs.djangoproject.com/en/6.1/contents/
+https://docs.djangoproject.com/en/6.1/topics/templates/
+https://docs.djangoproject.com/en/6.1/ref/templates/language/
+https://docs.djangoproject.com/en/6.1/ref/templates/builtins/#ref-templates-builtins-tags
 
 # environment setup
 Always install Django inside a virtual environment (.venv), never globally. Installing globally can break system tools and causes version conflicts between different projects. [1] 

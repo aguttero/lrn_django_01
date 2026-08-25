@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}{{ selected_month|capfirst }} Challenge{%endblock%}
+{% block title %}
+    {{ selected_month|capfirst }} Challenge
+{%endblock%}
+
 {% block content %}
+    {% include "challenges/includes/header.html" %}
+
     <h1>
         Challenge Item Template page <br />
         Month: {{ selected_month|capfirst }}

@@ -28,7 +28,7 @@ def healthy(request):
 
 
 # WITH TEMPLATE RENDER
-def index_old(request):
+def index(request):
     month_list = list(monthly_content_dict.keys())
     context_dict = {
         "month_list": month_list,
@@ -78,7 +78,8 @@ def monthly_challenge(request, month: str):
     print(f"challenge_text= {challenge_text}")
     if month == "badurl":
         raise Http404("sample 404 response")
-    if challenge_text or not challenge_text: # para que aparezca el None en el e render del template
+    # if challenge_text or not challenge_text: # para que aparezca el None en el e render del template
+    if challenge_text:
         context_dict = {"challenge_item": challenge_text, "selected_month": month}
         return render(
             request=request,
