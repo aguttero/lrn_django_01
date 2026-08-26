@@ -24,7 +24,7 @@ Step 1: Create the workspace root
 mkdir my-project-wrapper
 cd my-project-wrapper
 
-Step 2: Create and activate the virtual environment [2] 
+Step 2: Create and activate the virtual environment
 
 python -m venv .venv
 source .venv/bin/activate  # On Windows use: .venv\Scripts\activate
@@ -67,12 +67,13 @@ python manage.py startapp <app_name>
 # Run DEV Server
 python3 src/manage.py runserver
 
-# Settings.py
-## add application name to 
+# Django project and app settings
+## Settings.py
+### add application name to 
 INSTALLED_APPS = [
     'challenges', # name defined in challenges/apps.py...
 
-## add templates global path:
+### add templates global path:
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -80,21 +81,52 @@ TEMPLATES = [
             BASE_DIR / "templates"
 
 
-## add '/static/' global path
+### add '/static/' global path
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
     ]
 
 
 
-# src/subapp/urls.py
-add app_name = "appname" to be able to reverse call the specific url path by path name
-add path to urlpatterns
+## src/subapp/urls.py
+add this file with:
+```python
+from django.urls import path
+from . import views
+# add app_name = "appname" to be able to reverse call the specific url path by path name
+app_name = "challenges"
+# add path to urlpatterns
 urlpatterns = [
     path("", views.index, name="index"),
     path("pol", views.pol, name="pol"),
+    path("<str:month>", views.monthly_challenge, name="month_str_path"),
+]
+```
 
-# views,py
+# src/mainapp/urls.py
+include the subapp.urls file in main urlpatterns list:
+```python
+urlpatterns = [
+    path("challenges/", include("challenges.urls")),
+    path("admin/", admin.site.urls),
+]
+```
+
+## views.py
 add route functions 
 def pol(request):
     return HttpResponse("<h1>Hello. This is POL</h1>")
+
+# VS-CODE CODE EDITOR Settings
+## settings.json
+```json
+{
+"files.associations":{
+"**/*.html": "html",
+"**/templates/**/*.html": "django-html",
+"**/templates/**/*": "django-txt",
+"**/requirements{/**,*}.{txt,in}": "pip-requirements"
+},
+"emmet.includeLanguages":{"django-html": "html"}
+}
+```

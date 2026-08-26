@@ -20,7 +20,7 @@ monthly_content_dict = {
 
 # Create your views here.
 def pol(request):
-    return HttpResponse("<h1>Hello. This is POL</h1>")
+    return HttpResponse("<h1>Hello. This is app CHALLENGES POL</h1>")
 
 
 # WITH TEMPLATE RENDER
