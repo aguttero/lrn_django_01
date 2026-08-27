@@ -130,3 +130,9 @@ def pol(request):
 "emmet.includeLanguages":{"django-html": "html"}
 }
 ```
+# SQL Database
+## Sqlite
+db.slqite3 file auto created in src/db.sqlite3
+## When to use sqlite?
+https://sqlite.org/whentouse.html
+Generally speaking, any site that gets fewer than 100K hits/day should work fine with SQLite. The 100K hits/day figure is a conservative estimate, not a hard upper bound. SQLite has been demonstrated to work with 10 times that amount of traffic.
