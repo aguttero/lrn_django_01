@@ -206,3 +206,73 @@ python manage.py makemigrations
 # 3. Apply the fresh migration
 python manage.py migrate
 ```
+
+## database CRUD api
+see playin with the api
+https://docs.djangoproject.com/en/6.1/intro/tutorial02/
+run: python3 src/manage.py shell
+### write:
+>>> from book_outlet.models import Book
+>>> harry_potter = Book(title="Harry Potter book 1",rating=5)
+>>> harry_potter.save() -> write record to DB
+
+### read:
+>>> Book.objects.all()
+
+## Field validators
+https://docs.djangoproject.com/en/6.1/ref/validators/
+https://docs.djangoproject.com/en/6.1/ref/validators/#how-validators-are-run
+
+## Python crud
+### through var
+Create:
+new_item = Class(values)
+new_item.save()
+Select, update, delete:
+item_var = Class.objects.all()[index]
+item_var.save() -> upsert
+item.delete()
+
+### directly
+Class.objects.create(values) 
+
+## Queries:
+https://docs.djangoproject.com/en/6.1/topics/db/queries/
+
+### QuerySet method get()
+Class.objects.get(filter condition.. ej: id=3) -> one value
+
+### QuerySet method filter()
+Class.objeccts.filter(gilter condition) -> QuerySest -> multiple values
+
+### Additional QuerySet methods:
+https://docs.djangoproject.com/en/6.1/ref/models/querysets/#django.db.models.query.QuerySet
+
+### Field Lookups
+filter conditions -> Field lookups
+https://docs.djangoproject.com/en/6.1/ref/models/querysets/#field-lookups
+
+### Q Query constructor
+Complex lookups with Q objects
+from django.db.models import Q
+| -> OR
+, -> and
+Book.objects.filter(Q(rating__lt=3) | Q(is_bestselling=True), Q(author="JKRowling"))
+https://docs.djangoproject.com/en/6.1/topics/db/queries/#s-complex-lookups-with-q-objects
+https://docs.djangoproject.com/en/6.1/ref/models/querysets/#q-objects
+
+### Q Query equivalent AND, OR  XOR
+https://docs.djangoproject.com/en/6.1/ref/models/querysets/#operators-that-return-new-querysets
+
+
+### Query Performance
+Cache > store a Query in a variable before printing or doing anythong with it
+This activates Django Cache.
+See Udemy s85 for explanation
+
+### DB Bulk operations
+https://docs.djangoproject.com/en/6.1/topics/db/queries/#deleting-objects
+https://docs.djangoproject.com/en/6.1/ref/models/querysets/#delete
+https://docs.djangoproject.com/en/6.1/topics/db/queries/#updating-multiple-objects-at-once
+https://docs.djangoproject.com/en/6.1/ref/models/querysets/#bulk-create
+https://docs.djangoproject.com/en/6.1/ref/models/querysets/#bulk-update
