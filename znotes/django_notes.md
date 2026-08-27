@@ -86,7 +86,8 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
     ]
 
-
+### Set Time Zone
+While you’re editing mysite/settings.py, set TIME_ZONE to your time zone.
 
 ## src/subapp/urls.py
 add this file with:
@@ -136,3 +137,72 @@ db.slqite3 file auto created in src/db.sqlite3
 ## When to use sqlite?
 https://sqlite.org/whentouse.html
 Generally speaking, any site that gets fewer than 100K hits/day should work fine with SQLite. The 100K hits/day figure is a conservative estimate, not a hard upper bound. SQLite has been demonstrated to work with 10 times that amount of traffic.
+
+## Django Manage.py documentation
+https://docs.djangoproject.com/en/6.1/ref/django-admin/
+
+## Django DB setup
+https://docs.djangoproject.com/en/6.1/intro/tutorial02/
+
+1. run initial django db table setup:
+cd src [ZAG test ok in dev: run from root project folder and ] python3 src/manage.py migrate
+run: python3 manage.py migrate
+
+2. populate src/subapp/models.py
+3. cd src [ZAG test ok in dev: run from root project folder and ] python3 src/manage.py makemigrations
+4. run: python3 manage.py makemigrations [optional subapp name]
+4.1 Optional: To print to screen the sql to be generated: (does not affect DB)
+  run: python3 manage.py sqlmigrate subapp 0001
+4.2 Optional: run: python3 manage.py check
+this checks for any problems in your project without making migrations or touching the database.
+5. To execute command in DB
+  run: python3 manage.py migrate
+
+### Migrations
+Migrations let you change your models over time, as you develop your project, without the need to delete your database or tables and make new ones - it specializes in upgrading your database live, without losing data.
+
+#### three-step guide to making model changes:
+
+* Change your models (in models.py).
+* Run python manage.py makemigrations to create migrations for those changes.
+* Run python manage.py migrate to apply those changes to the database.
+
+### explore with django python shell
+* run: python manage.py shell
+
+## DB Rollback
+### Rollback to Zero
+python manage.py migrate <app_name> zero
+
+### Complete delete DB
+sqlite:
+Manually delete your db.sqlite3 file from the project root
+
+delete local migration files:
+Delete all files inside your app's migrations/ folder except for the __init__.py file.
+delete __pycache--
+
+### Rollback one step (undo last migration)
+1.Target the name of the migration before your mistake.
+run: python manage.py migrate <app_name> <previous_migration_name>
+
+Tip: If you want to undo the very first migration (0001_initial), run python manage.py migrate <app_name> zero.
+
+2. Delete the bad migration file: Manually delete the specific 000X_...py file from your app's migrations/ folder.
+
+3. Remake the migration: Fix your models.py file, then generate a clean file.
+run: python manage.py makemigrations
+  python manage.py migrate
+
+### Rollback to zero keeping django internal tables
+If you want to clear out your app's custom tables but keep Django's built-in user and admin tables, use this workflow:
+```bash
+# 1. Clear the app's database tables
+python manage.py migrate <app_name> zero
+
+# 2. Re-generate the initial migration file
+python manage.py makemigrations
+
+# 3. Apply the fresh migration
+python manage.py migrate
+```
