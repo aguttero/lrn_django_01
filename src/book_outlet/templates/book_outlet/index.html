@@ -10,4 +10,8 @@
       <li><a href ="{% url 'book_outlet:book-detail' book.id %}">{{ book.title }}</a> (Rating: {{ book.rating }})</li>
     {% endfor %}
   </ul>
+
+  <p>Total Number of Books: {{ total_num_books }}</p>
+  <p>Average rating: {{ average_rating.rating__avg }}</p>
+
 {% endblock %}

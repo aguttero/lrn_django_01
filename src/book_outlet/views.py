@@ -1,3 +1,5 @@
+# Aggregation s93
+from django.db.models import Avg, Max, Min
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 
@@ -10,9 +12,21 @@ def pol(request):
 
 
 def index(request):
-    books = Book.objects.all()
-    print (f"Queryset={books}")
-    context = {"books": books}
+    books = Book.objects.all().order_by("-title") # -title orders descending
+
+    # Aggreation
+    num_books = books.count()
+    print(f"books.count()={num_books}")
+    books_aggregate = books.aggregate(Avg("rating"), Min("rating"), Max("rating"))
+    print(f"books.aggregate()={books_aggregate}")
+    avg_rating = books.aggregate(Avg("rating"))
+
+    print(f"Queryset={books}")
+    context = {
+        "books": books,
+        "total_num_books": num_books,
+        "average_rating": avg_rating,
+    }
     return render(request, "book_outlet/index.html", context)
 
 
@@ -22,7 +36,7 @@ def book_detail(request, id):
     # except:
     #   raise Http404()
     book = get_object_or_404(Book, pk=id)
-    print (f"Get Item={book}")
+    print(f"Get Item={book}")
     return render(
         request,
         "book_outlet/book_detail.html",
@@ -31,5 +45,5 @@ def book_detail(request, id):
             "author": book.author,
             "rating": book.rating,
             "is_bestseller": book.is_bestselling,
-        }
+        },
     )

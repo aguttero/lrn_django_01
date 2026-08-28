@@ -276,3 +276,9 @@ https://docs.djangoproject.com/en/6.1/ref/models/querysets/#delete
 https://docs.djangoproject.com/en/6.1/topics/db/queries/#updating-multiple-objects-at-once
 https://docs.djangoproject.com/en/6.1/ref/models/querysets/#bulk-create
 https://docs.djangoproject.com/en/6.1/ref/models/querysets/#bulk-update
+
+## Relationships
+
+
+# Admin Module
+## Setup
