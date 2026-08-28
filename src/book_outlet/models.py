@@ -1,4 +1,4 @@
-
+from datetime import date
 
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
@@ -28,7 +28,7 @@ class Address(models.Model):
         verbose_name_plural = "Address Entries"
 
 
-class Author(models.Model):
+class BookAuthor(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     address = models.OneToOneField(
@@ -46,8 +46,9 @@ class Book(models.Model):
         validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
     is_bestselling = models.BooleanField(default=False)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, related_name="books")
+    last_update = models.DateField(auto_now=True, null=True)
+    author = models.ForeignKey(BookAuthor, on_delete=models.CASCADE, null=True, related_name="books")
     published_countries = models.ManyToManyField(Country)
 
     def __str__(self):
-        return f"{self.title!r} ({self.rating!r})"
+        return f"{self.title!r} ({self.rating!r}) rev: {self.last_update}"
