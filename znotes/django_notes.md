@@ -167,6 +167,9 @@ Migrations let you change your models over time, as you develop your project, wi
 * Run python manage.py makemigrations to create migrations for those changes.
 * Run python manage.py migrate to apply those changes to the database.
 
+#### Migration that involves normalization
+PENDING.... on how to resolve
+
 ### explore with django python shell
 * run: python manage.py shell
 
@@ -252,6 +255,46 @@ https://docs.djangoproject.com/en/6.1/ref/models/querysets/#django.db.models.que
 filter conditions -> Field lookups
 https://docs.djangoproject.com/en/6.1/ref/models/querysets/#field-lookups
 
+### Query related data (table relationship)
+https://docs.djangoproject.com/en/6.1/topics/db/queries/
+https://docs.djangoproject.com/en/6.1/topics/db/queries/#related-objects
+books_by_rowling = Book.objects.filter(author__last_name="Rowling")
+author__ double underscore indicates relationship field
+Additional filter modifier with __
+books_by_rowling = Book.objects.filter(author__last_name__contains="wling")
+
+### Inverse Query RelatedClass_Set - s107
+jkr = Author.objects.get(first_name="JK")
+queryset = jkr.book_set.all()) -> query set of books related to given author
+
+#### Optional use related_name="books" in Foreign Key definition - s107
+jkr = Author.objects.get(first_name="JK")
+queryset = jkr.books.all() -> query set of books related
+
+### One to one relations s109
+address = models.OneToOneField(Address, on_delete=models.CASCADE, null=True)
+Dont need to use related_name. Django does it automatically in 1-to-1 relationships
+author.address.street
+The inverse also works automatically
+Address.objects.all()[0].auhtor.first_na,e
+
+### Many to Many Relations s112
+new_country = Country(name="Chile", code="CL")
+new_country.save()
+mybook.published_countries.add(new_country)
+Query:
+mybook.published_countries.filter(code="CL")
+
+Inverse:
+chile = Country.objects.all()[0]
+chile.book_set.all() -> Query set
+Can add a related name books to the relationship attributes to use chile.books.all()
+
+### Circular, Lazy and related to other app relationships
+s115
+
+
+
 ### Q Query constructor
 Complex lookups with Q objects
 from django.db.models import Q
@@ -277,8 +320,29 @@ https://docs.djangoproject.com/en/6.1/topics/db/queries/#updating-multiple-objec
 https://docs.djangoproject.com/en/6.1/ref/models/querysets/#bulk-create
 https://docs.djangoproject.com/en/6.1/ref/models/querysets/#bulk-update
 
+### Aggregation
+https://docs.djangoproject.com/en/6.1/topics/db/aggregation/#
+
 ## Relationships
+Needs to be planed before hand
 
 
 # Admin Module
 ## Setup
+https://docs.djangoproject.com/en/6.1/intro/tutorial02/#introducing-the-django-admin
+python manage.py createsuperuser
+usr: admin
+eml: test@test.com
+pwd: pwd
+
+## add subapps to admin
+https://docs.djangoproject.com/en/6.1/intro/tutorial02/
+in subapp/admin.py
+from django.contrib import admin
+from .models import subapp_Class
+admin.site.register(subapp_class)
+
+## Configuring Model fields and admin settings
+see s99 and s100 in Udemy Django
+tricK
+class subappClassAdmin(admin.ModelAdmin):
