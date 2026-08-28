@@ -1,9 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from datetime import date
 from django.http import HttpResponse
-from .models import Post
 
-all_posts_hardcoded = [
+all_posts = [
     {
         "slug": "hike-in-the-mountains",
         "image": "mountains.jpg",
@@ -69,7 +68,6 @@ all_posts_hardcoded = [
     }
 ]
 
-# This can be deleted... was needed for the all_post_harcoded
 def get_date(post):
   return post['date']
 
@@ -81,7 +79,8 @@ def pol(request):
 #     return HttpResponse("<h1> This is app BLOG INDEX PAGE</h1>")
 
 def starting_page(request):
-    latest_posts = Post.objects.all().order_by("-date")[:3]
+    sorted_posts = sorted(all_posts, key=get_date)
+    latest_posts = sorted_posts[-3:]
     render_context = {
       "posts": latest_posts
     }
@@ -89,16 +88,14 @@ def starting_page(request):
 
 
 def posts(request):
-    all_posts = Post.objects.all().order_by("-date")
+    # return HttpResponse(f"<h1> This is the PostS PAGE</h1>")
     return render(request, "blog/all-posts.html", {
             "all_posts": all_posts
         })
 
 def post_detail(request,slug):
-    # identified_post = next(post for post in all_posts if post['slug'] == slug)
-    identified_post = get_object_or_404(Post, slug=slug)
+    identified_post = next(post for post in all_posts if post['slug'] == slug)
     return render(request, "blog/post-detail.html", {
-        "post": identified_post,
-        "post_tags": identified_post.tags.all()
+        "post": identified_post
     })
     # return HttpResponse(f"<h1> This is slug: {slug} post detail PAGE</h1>")
