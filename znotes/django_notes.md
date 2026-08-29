@@ -64,6 +64,15 @@ django-admin startproject my_django_project src
 cd src
 python manage.py startapp <app_name>
 
+## delete/rename app
+if app is empty just delete it or move it
+in not empty check:
+* settings.py
+* urls.py
+* update subapp/apps.py
+* udpate imports reference in other files
+* update urls.py
+
 # Run DEV Server
 python3 src/manage.py runserver
 
@@ -326,6 +335,9 @@ https://docs.djangoproject.com/en/6.1/topics/db/aggregation/#
 ## Relationships
 Needs to be planed before hand
 
+# Forms
+https://docs.djangoproject.com/en/6.1/topics/forms/
+https://docs.djangoproject.com/en/6.1/intro/tutorial04/
 
 # Admin Module
 ## Setup

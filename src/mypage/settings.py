@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'challenges', # name defined in challenges/apps.py
+    'reviews',
     'blog',
     'book_outlet',
     'django.contrib.admin',
