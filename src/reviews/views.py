@@ -14,8 +14,13 @@ def review(request):
             return redirect("reviews:thank-you")
 
     # if GET request or form.post is not valid:
-    form = ReviewForm()
+    # form = ReviewForm()
+    #
+    # else GET request: Resetted empty form
+    else:
+        form = ReviewForm()
 
+    # if form is invalid it renders again without deleting data or error messages
     render_context = {"form": form}
     return render(request, "reviews/review.html", render_context)
 
