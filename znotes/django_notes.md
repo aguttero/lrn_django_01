@@ -339,6 +339,12 @@ Needs to be planed before hand
 https://docs.djangoproject.com/en/6.1/topics/forms/
 https://docs.djangoproject.com/en/6.1/intro/tutorial04/
 
+## ModelForms
+https://docs.djangoproject.com/en/6.1/topics/forms/modelforms/
+
+# Class-based views
+https://www.udemy.com/course/python-django-the-practical-guide/learn/lecture/26399256#overview
+
 # Admin Module
 ## Setup
 https://docs.djangoproject.com/en/6.1/intro/tutorial02/#introducing-the-django-admin
