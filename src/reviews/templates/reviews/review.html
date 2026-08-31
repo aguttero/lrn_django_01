@@ -20,9 +20,15 @@
             {% endfor %}
                 <button type="submit">Send</button>
         </form>
-        <p>
-            {%comment%}
+        <section>
+            {%comment%} This would render the entire form:
+            <form>
+                    {{ form }}
+                    <button type="submit">Send</button>
+            </form>
             {%endcomment%}
+        <p>
         </p>
+        </section>
     </body>
 </html>
