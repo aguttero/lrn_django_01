@@ -347,7 +347,14 @@ https://docs.djangoproject.com/en/6.1/topics/forms/modelforms/
 https://docs.djangoproject.com/en/6.1/topics/class-based-views/generic-editing/#:~:text=FormView%3A
 https://docs.djangoproject.com/en/6.1/ref/class-based-views/generic-editing/#django.views.generic.edit.FormView
 
+
+
 ### reverse_lazy() for URL redirect in FormView
+
+Since success_url is a class attribute, it gets evaluated when the class is defined (at import time) — before Django's URL resolver (urls.py) has necessarily finished loading. So you can't use reverse() directly here, because it would try to resolve the URL too early and could throw an error.
+
+That's what reverse_lazy() is for — it returns a lazy object that only gets evaluated when it's actually used (i.e., when Django needs the URL string), not when the class is defined.
+https://docs.djangoproject.com/en/6.1/ref/urlresolvers/#django.urls.reverse_lazy
 
 ```python
 from django.urls import reverse_lazy
@@ -359,9 +366,42 @@ class ContactFormView(FormView):
     success_url = reverse_lazy("contact-thanks")  # name of a URL pattern in subapp/urls.py
 ```
 
+### reverse dynamic for ULR redirect in FormView 
+
+get_success_url() — when you need it dynamic
+
+Sometimes the destination URL depends on the object being created/updated (e.g., "redirect to this new object's detail page"). For that, override the get_success_url() method instead of the class attribute — methods are evaluated at request time, so reverse() (not reverse_lazy) works fine here:
+```python
+from django.urls import reverse
+
+class ContactFormView(FormView):
+    template_name = "contact.html"
+    form_class = ContactForm
+
+    def get_success_url(self):
+        return reverse("contact-thanks")
+    # OR with dynamic data e.g. redirecting to a related object's page     
+    def get_success_url(self):
+        return reverse("thing-detail", kwargs={"pk": self.object.pk})
+```
+
+#### Rule of thumb for reverse_lazy or get_success_url
+* Static, unchanging destination → success_url = reverse_lazy("url-name")
+* Destination depends on runtime data (form input, created object, request user, etc.) → override get_success_url() with reverse()
+
+Either way, the key habit is: never write raw URL strings in your views — always reference URL names and let reverse/reverse_lazy build the path for you. That's the Django-idiomatic way to keep your views decoupled from your URL structure.
+
+### CreateView -> Form
+https://docs.djangoproject.com/en/6.1/ref/class-based-views/generic-editing/#django.views.generic.edit.CreateView
+Avoids creating form class in forms.py
+based on Models.py Class to create a view to gather data
+View Session 161
+
 
 # Class-based views
 https://www.udemy.com/course/python-django-the-practical-guide/learn/lecture/26399256#overview
+
+
 
 # Admin Module
 ## Setup

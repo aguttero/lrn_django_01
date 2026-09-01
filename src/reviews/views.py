@@ -17,6 +17,11 @@ from django.views.generic import TemplateView, ListView, DetailView # DJ 6.1 doc
 
 #V05
 from django.views.generic.edit import FormView
+from django.urls import reverse_lazy
+
+# V06 - Capture data without formclass with Create View
+from django.views.generic.edit import CreateView
+
 
 # V03
 class ReviewView_v3(View):
@@ -39,8 +44,19 @@ class ReviewView_v3(View):
         render_context = {"form": form}
         return render(request, "reviews/review.html", render_context)
 
+#V06 CreateView -> Capture DATA
+class ReviewView(CreateView):
+    model = Review
+    fields = "__all__"
+    # for additional form control can add (instead of fields)
+    # form_class = ReviewForm
+    template_name = "reviews/review.html"
+    success_url = reverse_lazy("reviews:thank_you")
+
+
+
 #V05 FormView
-class ReviewView(FormView):
+class ReviewView_v5(FormView):
     # GET
     form_class = ReviewForm
     template_name = "reviews/review.html"
@@ -48,9 +64,11 @@ class ReviewView(FormView):
 
     # POST
     # redirect("reviews:thank_you")
-    success_url = "thankyou"
+    success_url = reverse_lazy("reviews:thank_you")
 
-
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
 
 
 # Create your views here.
@@ -138,7 +156,7 @@ class ReviewsListView(ListView):
     # To filter the list sent to template:
     def get_queryset(self):
         base_query = super().get_queryset()
-        data = base_query.filter(rating__gte=4)
+        data = base_query.filter(rating__gte=1)
         return data
 
 class ReviewItemView(DetailView):
