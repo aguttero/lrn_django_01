@@ -255,7 +255,7 @@ https://docs.djangoproject.com/en/6.1/topics/db/queries/
 Class.objects.get(filter condition.. ej: id=3) -> one value
 
 ### QuerySet method filter()
-Class.objeccts.filter(gilter condition) -> QuerySest -> multiple values
+Class.objeccts.filter(filter condition) -> QuerySest -> multiple values
 
 ### Additional QuerySet methods:
 https://docs.djangoproject.com/en/6.1/ref/models/querysets/#django.db.models.query.QuerySet
@@ -341,6 +341,24 @@ https://docs.djangoproject.com/en/6.1/intro/tutorial04/
 
 ## ModelForms
 https://docs.djangoproject.com/en/6.1/topics/forms/modelforms/
+
+
+## FormViews
+https://docs.djangoproject.com/en/6.1/topics/class-based-views/generic-editing/#:~:text=FormView%3A
+https://docs.djangoproject.com/en/6.1/ref/class-based-views/generic-editing/#django.views.generic.edit.FormView
+
+### reverse_lazy() for URL redirect in FormView
+
+```python
+from django.urls import reverse_lazy
+from django.views.generic.edit import FormView
+
+class ContactFormView(FormView):
+    template_name = "contact.html"
+    form_class = ContactForm
+    success_url = reverse_lazy("contact-thanks")  # name of a URL pattern in subapp/urls.py
+```
+
 
 # Class-based views
 https://www.udemy.com/course/python-django-the-practical-guide/learn/lecture/26399256#overview

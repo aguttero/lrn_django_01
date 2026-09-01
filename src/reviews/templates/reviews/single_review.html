@@ -1,0 +1,11 @@
+{% extends "reviews/base.html" %}
+
+{% block title %}Review Detail{% endblock %}
+
+{% block content %}
+{% comment %} var name can be model class in lower case: review.field_name or object.field_name
+{% endcomment %}
+  <h1>{{ review.user_name }}</h1>
+  <p>Rating: {{ review.rating }}</p>
+  <p>{{ review.review_text }}</p>
+{% endblock %}

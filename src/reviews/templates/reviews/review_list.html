@@ -1,0 +1,21 @@
+{% extends "reviews/base.html" %}
+
+{% block title %}All Reviews{% endblock %}
+
+{% block content %}
+    {% comment %} This is for Class Vies (TemplateView) - iterable name 'reviews' defined in var get_context
+    <ul>
+    {% for review in reviews %}
+      <li>{{ review.user_name }} (Rating: {{ review.rating }})</li>
+    {% endfor %}
+  </ul>
+  {% endcomment %}
+
+  {% comment %} This is for Class Vies (ListView) - iterable name 'objec_list' is the default iterable
+  {% endcomment %}
+  <ul>
+    {% for review in object_list %}
+      <li>{{ review.user_name }} (Rating: {{ review.rating }})</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

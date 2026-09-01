@@ -5,8 +5,8 @@ def review(request):
     if request.method == 'POST':
       entered_username = request.POST['username']
       print(entered_username)
-      # return HttpResponseRedirect("/thank-you")
-      return redirect("reviews:thank-you")
+      # return HttpResponseRedirect("/thank_you")
+      return redirect("reviews:thank_you")
 
     return render(request, "reviews/review.html")
 
