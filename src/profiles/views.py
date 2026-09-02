@@ -3,6 +3,9 @@ from django.views import View
 
 from typing import BinaryIO
 
+# TO SERVE FILES
+from django.views.generic import ListView
+
 from .forms import ProfileForm
 # Create your views here.
 
@@ -29,6 +32,13 @@ class CreateProfileView(CreateView):
     model = UserProfile
     fields = "__all__"
     success_url =  reverse_lazy("profiles:create")
+
+# TO SERVE FILES
+class ListProfileView(ListView):
+    model = UserProfile
+    template_name = "profiles/user_profile.html"
+    context_object_name = "profiles" # default is "object_list"
+
 
 
 

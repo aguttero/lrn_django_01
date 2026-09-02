@@ -18,6 +18,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+# To serve files to dev server (User Profile images)
+# MEDIA_URL definition in settings.py
+from django.conf.urls.static import static
+from django.conf import settings
+
 urlpatterns = [
     path("profiles/", include("profiles.urls")),
     path("reviews/", include("reviews.urls")),
@@ -25,4 +30,4 @@ urlpatterns = [
     path("blog/", include("blog.urls")),
     path("bookoutlet/", include("book_outlet.urls")),
     path("admin/", admin.site.urls),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

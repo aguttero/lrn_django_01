@@ -139,4 +139,5 @@ MAILERS = {
     },
 }
 
-MEDIA_ROOT = BASE_DIR / "uploads"
+MEDIA_ROOT = BASE_DIR / "uploads" # Actual server folder to store files
+MEDIA_URL = "/user-media/" # this is the virtual url path shown to the client browser

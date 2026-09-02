@@ -168,3 +168,29 @@ class ReviewItemView(DetailView):
     #      base_query = super().get_queryset()
     #      data = base_query.objects.get(id=review_id)
     #      return data
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # to copare laoded review id vs session favorite review id
+        loaded_review = self.object
+        print (f"loaded_review={loaded_review!r}")
+        request = self.request
+        # favorite_id = request.session["favorite_review"]
+        favorite_id = request.session.get("favorite_review") # Get avoids error if session has not been set before
+        print (f"favorite_id = {favorite_id!r}")
+        context["is_favorite"] = favorite_id == str(loaded_review.id) # favorite_id in session is a string // True or False that is feeded into the html if
+        return context
+
+
+#V06 Session - Favorite button in review.html
+class AddFavoriteView(View):
+    def post(self, request):
+        review_id = request.POST['review_id']
+        # fav_review = Review.objects.get(pk=review_id)
+
+        #STORE in session memory - new key favorite_review defined here
+        # Store review_id and not the DB Record or object
+        # request.session["favorite_review"] = fav_review.id
+        request.session["favorite_review"] = review_id  ## IT IS STORED AS STRING
+        return redirect ("reviews:review_detail",review_id)

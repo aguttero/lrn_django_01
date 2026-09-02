@@ -99,11 +99,17 @@ STATICFILES_DIRS = [
 ### Set files MEDIA ROOT path
 MEDIA_ROOT = BASE_DIR / "uploads"
 
+### Set URL path for client downloads - ZAG Pending validation of Best PRactice for Django v6
+MEDIA_URL = "/user-media/" # this is the virtual url path shown to the client browser
+Edit Global url.py:
+from django.conf.urls.static import static
+from django.conf import settings
+ulrpatterns = [
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
 ### Set Time Zone
 While you’re editing mysite/settings.py, set TIME_ZONE to your time zone.
-
-
-
 
 ## src/subapp/urls.py
 add this file with:
@@ -412,6 +418,82 @@ https://www.udemy.com/course/python-django-the-practical-guide/learn/lecture/263
 https://docs.djangoproject.com/en/6.1/topics/http/file-uploads/
 ZAG: Validate with 6.1 documentation the secure way to upload and validate
 
+## File download validate with 6.1 the way to handle download
+* s171 y 172 in Udemy
+### Claude: 1. Static files (CSS, JS, images baked into your app)
+Never serve these through a Django view in production. Django's own docs are blunt about this: Django isn't a static file server, and hand-rolling it is "grossly inefficient and probably insecure, so it is unsuitable for production." 
+Django
+* In development, django.contrib.staticfiles handles this automatically via runserver when DEBUG = True — you don't need to do anything special.
+
+* In production, let something else serve them entirely:
+
+A reverse proxy (Nginx/Apache) serving straight from STATIC_ROOT, or
+A CDN / object storage (S3, Cloudflare R2, etc.) via django-storages, or
+WhiteNoise (whitenoise.middleware.WhiteNoiseMiddleware) if you want Python to serve them but efficiently, with caching headers and compression handled for you — popular for small-to-medium apps on platforms like Heroku/Render.
+
+Run python manage.py collectstatic to gather everything into STATIC_ROOT for deployment.
+
+### Claude: 2. User-uploaded media files (things saved via FileField/ImageField)
+Same story — in dev, Django can serve them via django.views.static.serve() (wired up automatically if you add this to urls.py):
+```python
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+    # ... your patterns
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+```
+In production, again — offload to Nginx/Apache or object storage (S3 is the most common pattern via django-storages), not Django.
+
+### 3. Dynamic / protected file downloads (the case where Django should serve it)
+This is the one case where serving a file through a Django view is legitimate even in production — e.g., a PDF invoice that only the logged-in owner should download, or a generated report. Here you use FileResponse:
+```python
+from django.http import FileResponse, Http404
+from django.contrib.auth.decorators import login_required
+from pathlib import Path
+
+@login_required
+def download_invoice(request, invoice_id):
+    invoice = get_object_or_404(Invoice, id=invoice_id, user=request.user)
+    file_path = Path(invoice.file.path)
+    if not file_path.exists():
+        raise Http404
+
+    return FileResponse(
+        open(file_path, "rb"),
+        as_attachment=True,
+        filename=file_path.name,
+    )
+    ```
+### Key points for your junior-dev mental model:
+
+* FileResponse streams the file in chunks instead of loading it all into memory — important for large files.
+* as_attachment=True forces a download dialog instead of rendering inline in the browser.
+* Because this goes through a view, you get to add authorization checks (login_required, ownership checks, etc.) — that's the whole reason you're not just linking directly to MEDIA_URL.
+
+#### Best practice at scale: even for protected downloads, don't make Django stream the actual bytes in production — it's slow and ties up a worker process for the whole transfer. Instead:
+* Nginx: use X-Accel-Redirect — Django checks auth, then tells Nginx "you serve this file," and Nginx does the actual byte-shoveling.
+* S3/object storage: generate a short-lived pre-signed URL and redirect the user to it. Django never touches the file bytes at all.
+
+#### Quick decision table
+| File type | Dev | Production |
+|---|---|---|
+| Static assets (CSS/JS) | `runserver` auto | Nginx / CDN / WhiteNoise |
+| Public media uploads | `static()` helper | Nginx / S3 direct |
+| Protected/dynamic downloads | `FileResponse` in a view | `FileResponse` (small files) or `X-Accel-Redirect` / pre-signed S3 URL (better) |
+
+The pattern to internalize: Django's job is to decide whether you're allowed to have the file. Someone else's job is to actually push the bytes over the wire.
+
+# Sessions
+http://docs.djangoproject.com/en/6.1/topics/http/sessions/
+## settings.py
+Validate that is incliuded in 
+MIDDLEWARE -> django.contrib.sessions.middleware.SessionMiddleware
+INSTALLED_APPS -> 'django.contrib.sessions', 
+
+### Session Cokkie 
+* Default is set to 2 Weeks
+* To modify add SESSION_COOKIE_AGE = int:seconds 
 
 # Admin Module
 ## Setup
