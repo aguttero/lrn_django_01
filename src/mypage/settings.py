@@ -31,9 +31,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'challenges', # name defined in challenges/apps.py
+    'profiles',
     'reviews',
     'blog',
+    'challenges', # name defined in challenges/apps.py
     'book_outlet',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -137,3 +138,5 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+MEDIA_ROOT = BASE_DIR / "uploads"

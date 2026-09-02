@@ -95,8 +95,15 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
     ]
 
+
+### Set files MEDIA ROOT path
+MEDIA_ROOT = BASE_DIR / "uploads"
+
 ### Set Time Zone
 While you’re editing mysite/settings.py, set TIME_ZONE to your time zone.
+
+
+
 
 ## src/subapp/urls.py
 add this file with:
@@ -401,6 +408,9 @@ View Session 161
 # Class-based views
 https://www.udemy.com/course/python-django-the-practical-guide/learn/lecture/26399256#overview
 
+# File Uploads & Storage
+https://docs.djangoproject.com/en/6.1/topics/http/file-uploads/
+ZAG: Validate with 6.1 documentation the secure way to upload and validate
 
 
 # Admin Module
@@ -420,5 +430,5 @@ admin.site.register(subapp_class)
 
 ## Configuring Model fields and admin settings
 see s99 and s100 in Udemy Django
-tricK
+trick
 class subappClassAdmin(admin.ModelAdmin):

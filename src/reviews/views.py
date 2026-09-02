@@ -44,7 +44,7 @@ class ReviewView_v3(View):
         render_context = {"form": form}
         return render(request, "reviews/review.html", render_context)
 
-#V06 CreateView -> Capture DATA
+#V06 CreateView -> Capture DATA without need to define a form class
 class ReviewView(CreateView):
     model = Review
     fields = "__all__"
