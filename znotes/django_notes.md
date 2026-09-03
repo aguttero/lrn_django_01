@@ -533,11 +533,17 @@ https://www.youtube.com/watch?v=IoxHUrbiqUo
 2. Ajust Settings for production (hosting, DB)
 3. Collect Static Files for production
 4. Handle Staic & Uploaded files serving -> Devserver serves these files, but production does not
-5. Choose Host and Deploy
+5. Choose Host
+6. Host SSL and Custom domain
+10. Define Production and Development DB
+7. setup postgres datbase and server or RDS
+8. Re build production DB
+7. Firewall
 6. Backup
 7. Maintenance
 8. Logging
 8. Monitor operation
+9. External DB Access - SQLITE?
 9. Monitor performance
 10. Optimize performance
 9. Contingency
@@ -548,6 +554,9 @@ https://www.youtube.com/watch?v=IoxHUrbiqUo
 ## Database
 1. Prefer SQL vs NoSQL - Django is based in SQL. 
 2. SQlite vs MySQL vs Postgres
+
+### Academind s218 Postgres
+* AWS - Serverless: RDS (relational database service)
 
 ## WebServer
 1. Django is not a webserver is a Python Framwork
@@ -560,9 +569,13 @@ https://www.youtube.com/watch?v=IoxHUrbiqUo
 3 Dedicated server for static and uploaded files - More complex setup, better performance
 
 ## Hosting Provider
+* Decide Server vs Serverless
 google search for django hosting
 1. Digital Ocean - Tutorial for django hosting
 2. AWS -
+3. GCS
+4. Railway
+5. Render
 
 
 ## Udemy Max Academind- step by step
@@ -588,8 +601,9 @@ If files are updated, run command again
   SECRET_KEY = getenv("SECRET_KEY")
   DEBUG = getenv("IS_DEVELOPMENT", True)
 
-#### Deploy with AWS Elastic Beanstalk
+#### Deploy Serverless with AWS Elastic Beanstalk
 1. Academind session 216
+2. SSL and Custom Domain s217
 
 
 ## claude recommendation Deployment
