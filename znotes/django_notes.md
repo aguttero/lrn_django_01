@@ -5,6 +5,9 @@ https://docs.djangoproject.com/en/6.1/topics/templates/
 https://docs.djangoproject.com/en/6.1/ref/templates/language/
 https://docs.djangoproject.com/en/6.1/ref/templates/builtins/#ref-templates-builtins-tags
 
+# Run Dev Project
+python3 src/manage.py runserver
+
 # environment setup
 Always install Django inside a virtual environment (.venv), never globally. Installing globally can break system tools and causes version conflicts between different projects. [1] 
 To address your concern: a .venv does not force you to work inside a subfolder. It is best practice to keep your environment folder separate from your actual source code.
@@ -590,6 +593,7 @@ bash: python3 manage.py collectstatic -> Move all static files into \staticfiles
 If files are updated, run command again
 
 ### Serve Static files from django - MVP low traffic approach 1
+s2009 Academind
 1. MVP easy setup Django serves the files (like in dev) . Udemy Academind s211
 2. Define STATIC_ROOT and Collect all files
 4. Complete all migrations
@@ -600,13 +604,21 @@ If files are updated, run command again
   ALLOWED_HOSTS = [ getenv("APP_HOST")]
   SECRET_KEY = getenv("SECRET_KEY")
   DEBUG = getenv("IS_DEVELOPMENT", True)
+8. setup hosting SSL and Custom Domain
+9. Setup DB if different from SQLlite
 
 #### Deploy Serverless with AWS Elastic Beanstalk
 1. Academind session 216
 2. SSL and Custom Domain s217
 
+### Serve static files from web server - approach 2
+Udemy academind s219
 
-## claude recommendation Deployment
+### Serve static files from separate AWS S3 - approach 3
+Udemy academind s220
+
+
+# Deployment claude recommendation 
 For under 200 users, you have way more headroom than most tutorials assume — you genuinely don't need a complex setup. But first, one clarification since this trips people up:
 
 **"Web server" for Django deployment is actually two separate pieces:**
